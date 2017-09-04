@@ -1,8 +1,23 @@
+import java.util.ArrayList;
 
 public class User {
 	private String name;
 	private String email;
 	private String user_type;
+	private int id;
+	private ArrayList<Allocation> allocations;
+	
+	public User() {
+		this.allocations = new ArrayList<Allocation>();
+	}
+	
+	public User(String name, String email, String user_type, int id) {
+		this.name = name;
+		this.email = email;
+		this.user_type = user_type;
+		this.id = id;
+		this.allocations = new ArrayList<Allocation>();
+	}
 	public String getName() {
 		return name;
 	}
@@ -20,5 +35,20 @@ public class User {
 	}
 	public void setUser_type(String user_type) {
 		this.user_type = user_type;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	public void info() {
+		System.out.println("ID:" + id);
+		System.out.println("Name:" + getName());
+		System.out.println("Email:" + getEmail());
+		System.out.println("User type:" + getUser_type());
+		for(int i = 0; i < allocations.size(); i++)
+			allocations.get(i).info();
 	}
 }
