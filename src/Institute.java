@@ -2,12 +2,14 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Institute {
+	private String name;
 	private int user_id_count;
 	private int resource_id_count;
 	private ArrayList<Resource> resources;
 	private ArrayList<User> users;
 	
-	public Institute() {
+	public Institute(String name) {
+		this.name = name;
 		this.resources = new ArrayList<Resource>();
 		this.users = new ArrayList<User>();
 		this.user_id_count = 1;
@@ -54,7 +56,9 @@ public class Institute {
 		System.out.println("Error: There's no resource with id:" + id);
 		return null;
 	}
-
+	public void resourceInfo(int id) {
+		this.getResource(id).info();
+	}
 	public void userInfo(int id) {
 		this.getUser(id).info();
 	}
@@ -82,12 +86,14 @@ public class Institute {
 		for(int i = 0; i < pResource.allocations.size(); i++) {
 			Allocation pAllocation = pResource.allocations.get(i);
 			if(checkDate(pAllocation.getStart(), pAllocation.getEnd(), start) + checkDate(start,end,pAllocation.getStart()) > 0) {
-				System.out.println("Error: This data is not aviable.");
+				System.out.println("Error: This date is not aviable.");
 				return false;
 			}
 		}
 		
-		pResource.allocations.add(new Allocation(pUser, name, start, end));
+		Allocation pAlloc = new Allocation(pUser, name, start, end);
+		pResource.allocations.add(pAlloc);
+		pUser.addAllocation(pAlloc);
 		
 		return true;
 	}
@@ -109,8 +115,8 @@ public class Institute {
 		if(pResource != null) {
 			Allocation pAllocation = pResource.getAllocation(activity_name);
 			if(pAllocation != null) {
-				if(pAllocation.getActivity_description() != "") {
-					pAllocation.setStatus("Allocated");
+				if(pAllocation.getActivity_description() != null) {
+					pAllocation.setStatus("allocated");
 					return true;
 				}
 			}
@@ -119,4 +125,41 @@ public class Institute {
 		return false;
 	}
 
+	public void report() {
+		int concluded = 0,processing = 0 ,in_progress = 0 ,allocated = 0, total;
+		Resource pResource;
+		
+		for(int i = 0; i < this.resources.size(); i++) {
+			pResource = this.resources.get(i);
+			
+			concluded += pResource.getConcluded();
+			processing += pResource.getProcessing();
+			in_progress += pResource.getInProgress();
+			allocated += pResource.getAllocated();
+		}
+		
+		total = concluded + processing + in_progress + allocated;
+		
+		System.out.println("---- REPORTING ----");
+		System.out.println("NAME:" + this.name);
+		System.out.println("NUMBER OF USERS:" + this.users.size());
+		System.out.println("RESOURCES:" + this.resources.size());
+		System.out.println("ALLOCATIONS:" + total);
+		System.out.println("- PROCESSING:" + processing);
+		System.out.println("- ALLOCATED:" + allocated);
+		System.out.println("- IN PROGRESS:" + in_progress);
+		System.out.println("- CONCLUDED:" + concluded);
+		System.out.println("-- END REPORTING --");
+		
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
 }
+
+

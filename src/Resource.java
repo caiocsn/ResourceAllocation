@@ -28,6 +28,44 @@ public class Resource {
 		this.name = name;
 	}
 	
+	public void info() {
+		System.out.println("ID:" + this.id);
+		System.out.println("Name:" + this.name);
+		for(int i = 0; i < this.allocations.size(); i++)
+			this.allocations.get(i).info();
+	}
+	
+	public int getAllocated(){
+		int count = 0;
+		for(int i = 0 ; i < this.allocations.size(); i++)
+			if(this.allocations.get(i).getStatus() == "allocated")
+				count ++;
+		return count;
+	}
+	
+	public int getProcessing(){
+		int count = 0;
+		for(int i = 0 ; i < this.allocations.size(); i++)
+			if(this.allocations.get(i).getStatus() == "processing")
+				count ++;
+		return count;
+	}
+	
+	public int getInProgress(){
+		int count = 0;
+		for(int i = 0 ; i < this.allocations.size(); i++)
+			if(this.allocations.get(i).getStatus() == "in progress")
+				count ++;
+		return count;
+	}
+	
+	public int getConcluded(){
+		int count = 0;
+		for(int i = 0 ; i < this.allocations.size(); i++)
+			if(this.allocations.get(i).getStatus() == "concluded")
+				count ++;
+		return count;
+	}
 	public Allocation getAllocation(String name) {
 		Allocation pAllocation;
 		

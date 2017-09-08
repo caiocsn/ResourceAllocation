@@ -18,7 +18,7 @@ public class Allocation {
 		this.end = end;
 		this.activity_name = name;
 		this.users = new ArrayList<User>();
-		this.status = "processing allocation";
+		this.status = "processing";
 	}
 	
 	public Date getStart() {

@@ -48,7 +48,17 @@ public class User {
 		System.out.println("Name:" + getName());
 		System.out.println("Email:" + getEmail());
 		System.out.println("User type:" + getUser_type());
+		System.out.println("---- Allocations ----");
 		for(int i = 0; i < allocations.size(); i++)
 			allocations.get(i).info();
+		System.out.println("-----    END    -----");
+	}
+	
+	public boolean addAllocation(Allocation allocation) {
+		if(allocation == null)
+			return false;
+		
+		this.allocations.add(allocation);
+		return true;
 	}
 }
